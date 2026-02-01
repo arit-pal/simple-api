@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"net/http"
@@ -10,7 +10,7 @@ func TestHealthHandler(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/health", nil)
 	rec := httptest.NewRecorder()
 
-	healthHandler(rec, req)
+	HealthHandler(rec, req)
 
 	res := rec.Result()
 	defer res.Body.Close()
@@ -21,7 +21,7 @@ func TestHealthHandler(t *testing.T) {
 
 	body := rec.Body.String()
 	if body != "ok" {
-		t.Fatalf("expected bodt 'ok', got '%s'", body)
+		t.Fatalf("expected body 'ok', got '%s'", body)
 	}
 }
 
@@ -29,7 +29,7 @@ func TestHelloHandler_MissingName(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/hello", nil)
 	rec := httptest.NewRecorder()
 
-	helloHandler(rec, req)
+	HelloHandler(rec, req)
 
 	res := rec.Result()
 	defer res.Body.Close()
@@ -43,7 +43,7 @@ func TestHelloHandler_WithName(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/hello?name=Arit", nil)
 	rec := httptest.NewRecorder()
 
-	helloHandler(rec, req)
+	HelloHandler(rec, req)
 
 	res := rec.Result()
 	defer res.Body.Close()
